@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+
+<html lang="pt-br">
+	<!--
+	construido com base no: http://yuilibrary.com/yui/docs/node/properties.html
+	-->
+	<head>
+        <title> JS </title>
+		<meta charset="utf-8">
+		<script src="http://yui.yahooapis.com/3.17.2/build/yui/yui-min.js"> </script>
+	<style>
+		#page {
+			border: 1px solid black;
+		}
+		
+		#ruler {
+			background: url("ruler_ticks.png") repeat-x scroll -1px 11px rgba(245, 245, 245, 1);
+			height: 30px;
+			width: 400px;
+		}
+		
+		#grid {
+			position: relative;
+			background: url("grid.jpg");
+			height: 560px;
+			width: 0;
+			
+		}
+		
+		#footer {
+			margin: 0.5em;
+			
+		}
+		
+		button {
+			padding: 2px;
+		}
+		
+		input, #get {
+			margin-right: 5px;
+		}
+		
+		#set {
+			margin-left: 10px;
+		}
+		
+	</style>
+    </head>
+	
+	<body>
+		<div id="page">
+			<div id="ruler"></div>
+			<div id="grid">
+			</div>
+			<div id="footer">
+				<label>size</label>
+				<input 
+					type="number"
+					id="input"
+					min="0"
+					step="30"
+					value="30" 
+				/>px
+				<button id="set">set</button>
+				<br />
+				<button id="get">get</button>
+				<span><span>
+			
+			</div>
+			
+		</div>
+		<script>
+			YUI().use('node', 'button', function (Y){
+				var outGet = Y.one('span'),
+					outRuler = Y.one('#ruler'),
+					outGrid = Y.one('#grid'),
+					input   = Y.one('#input');
+					
+			
+				var setWidth = function(){
+					var width = input.get('value');
+					
+					outRuler.set('offsetWidth', width);
+					outGrid.set('offsetWidth', width);
+				}
+				
+				Y.one('#set').on('click', setWidth);
+				
+				var getWidth = function(){
+					var width = outGrid.get('offsetWidth');
+					outGet.setHTML(width + ' px');
+				}
+				
+				Y.one('#get').on('click', getWidth);
+			});
+		</script>
+	</body>
+
+</html>
