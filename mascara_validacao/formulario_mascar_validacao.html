@@ -1,0 +1,228 @@
+<!DOCTYPE html/>
+
+<html lang="pt-br">
+    <head>
+        <title>formativa</title>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width" />
+        
+        <style type="text/css">
+            * {
+				margin: 0px;
+				padding: 0px;
+			}
+			
+			body {
+				background: rgba(164, 148, 148, 0.2);
+				font-family: arial, sans-serif;
+			}
+			
+            #page {
+				width: 988px;
+                background: rgb(230, 146, 146);
+				margin: 30px auto;
+				margin-top: 0px;
+            }
+            
+
+
+			
+			#links {
+				padding-top: 60px;
+			}
+			
+			#conteudo {
+				text-align: center;
+				padding-top: 8px;
+				
+			}
+            
+			label {
+				margin-top: 8px;
+			}
+			
+			.for_label_height {
+				height: 1.5em;
+				width: 272px;
+			}
+			
+			input {
+				margin: 2px;
+				padding: 0.3em;
+				border: 1px solid transparent;
+			}
+			
+			.obrigatorio {
+				background-color: rgba(255, 2, 2, 0.36);
+			}
+        </style>
+		
+		<script type="text/javascript">
+		/*
+		fonts: http://codigofonte.uol.com.br/codigos/mascara-de-telefone-de-9-digitos-com-ddd-em-javascript
+			   https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions
+		*/
+			function mascara(o,f){
+				v_obj=o
+				v_fun=f
+				setTimeout("execmascara()",1)
+			}
+			function execmascara(){
+				v_obj.value=v_fun(v_obj.value)
+			}
+			function mtel(v){
+				// (88) 8888-8888
+				v=v.replace(/\D/g,"");             //Remove tudo o que não é dígito
+				v=v.replace(/^(\d{2})(\d)/g,"($1) $2"); //Coloca parênteses em volta dos dois primeiros dígitos
+				v=v.replace(/(\d{4})(\d)?/,"$1-$2");    //Coloca hífen entre o quarto e o quinto dígitos
+				return v;
+			}
+			
+			function mcnpj(v){
+				//  11.444.777/0001-XX
+				var reProblema = /(\/\.)/g,
+					reProblema2 = /\//g,
+					reBARPONT = /\/\d{3}\./g,
+					problemaPonto = 14;
+				
+				v=v.replace(/\D/g, "");
+				
+				v=v.replace(/(\d{2})(\d)/g, "$1.$2");
+				
+				v=v.replace(/(\d{3}(?=\d))(\d)/g, "$1.$2");
+				
+				v=v.replace(/(\d{2}\.\d{3})(\d)/g, "$1.$2");
+				
+				v=v.replace(/(\d{2}\.\d{3}\.\d{3})(\d)*/g, "$1/$2"); //oooo
+				if(reProblema.test(v)){
+					var indice = v.indexOf('/.');
+					v = v.slice(0,indice + 1) + v.slice(indice + 2, v.length);
+					
+				}
+				if(reProblema2.test(v)){
+					if(reBARPONT.test(v)){
+						v = v.slice(0,problemaPonto) + v.slice(problemaPonto + 1, v.length);
+					}
+				}
+				v=v.replace(/(\d{3}\/\d{4})(\d)/g, "$1-$2");
+				
+				console.log("cnpj: " + v);
+				return v;
+			}
+			
+			function mid(v){
+				v=v.replace(/\D/g, "");
+				return v;
+			}
+			
+			function mcep(v){
+				//00000-000
+				v=v.replace(/\D/g, "");
+				v=v.replace(/(\d{5})(\d)/g,"$1-$2");
+				return v;
+				
+			}
+			
+			function mnome(v){
+				v=v.replace(/\d/g, "");
+				return v;
+			}
+			
+			function id( el ){
+				return document.getElementById( el );
+			}
+			
+			
+			window.onload = function(){
+				id('telefone').onkeypress = function(){
+					mascara( this, mtel );
+				}
+				
+				id('cnpj').onkeypress = function(){
+					mascara(this, mcnpj );
+				}
+				
+				id('id').onkeypress = function(){
+					mascara(this, mid);
+				}
+				
+				id('cep').onkeypress = function(){
+					mascara(this, mcep);
+				}
+				
+				id('nome').onkeypress = function(){
+					mascara(this, mnome);
+				}
+			}
+
+			function validar(formulario){
+				var tamanhoCNPJ = 18;
+				
+                if(formulario.nome.value == ''){
+                    alert("O campo NOME deve ser preenchido.");
+                    return false;
+                }
+                if(formulario.cnpj.value == ''){
+                    alert("O campo CNPJ deve ser preenchido.");
+                    return false;
+                }
+				console.log("odjoijo");
+				
+				if(!(formulario.cnpj.value.length == tamanhoCNPJ)){
+					alert("Preencha completamente o cnpj");
+					return false;
+				}
+				if(formulario.id.value == ''){
+					alert("Preecha o campo id");
+					return false;
+				}
+				
+            return true;
+			}
+		</script>
+    </head>
+    <body>
+        <div id='page'>
+            
+            <div id='conteudo'>
+				<form id="formulario" onsubmit="return validar(this);" name="form1" method="post" action="">
+					<label for="nome">Nome (*): 
+						<br /> 
+						<input type="text" id="nome" class="for_label_height obrigatorio"  /> 
+					</label> 
+					<br />
+					<label for="id">ID (*): 
+						<br /> 
+						<input type="text" id="id" class="for_label_height obrigatorio" /> 
+					</label>
+					<br />
+					<label for="cnpj">CNPJ (*):<!--exemplo cnpj: 11.444.777/0001-XX  --> 
+						<br /> 
+						<input  type="text" id="cnpj" class="for_label_height obrigatorio" maxlength="18" /> 
+					</label>                                       
+					<br /> 
+					<label for="telefone">Telefone : 
+						<br /> 
+						<input  type="text" id="telefone" class="for_label_height" maxlength="14" /> 
+					</label>                                       
+					<br /> 
+					<label for="cep">CEP: 
+						<br /> 
+						<input  type="text" id="cep" class="for_label_height" maxlength="9" /> 
+					</label>                                       
+					<br /> 
+					
+					
+
+
+					<br />
+					
+					<br />
+					<input  name="Enviar" type="submit" id="Enviar" value="Enviar" /> 
+					<input name="Reset" type="reset" id="reset" value="Limpar" /> 
+				</form> 
+				
+            </div>
+        </div>
+    </body>
+</html>
