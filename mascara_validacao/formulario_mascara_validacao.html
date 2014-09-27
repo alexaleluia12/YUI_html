@@ -1,4 +1,4 @@
-<!DOCTYPE html/>
+﻿<!DOCTYPE html/>
 
 <html lang="pt-br">
     <head>
@@ -155,31 +155,31 @@
 				}
 			}
 
-			function validar(formulario){
-				var tamanhoCNPJ = 18;
+		function validar(formulario){
+			var tamanhoCNPJ = 18;
 				
-                if(formulario.nome.value == ''){
-                    alert("O campo NOME deve ser preenchido.");
-                    return false;
-                }
-                if(formulario.cnpj.value == ''){
-                    alert("O campo CNPJ deve ser preenchido.");
-                    return false;
-                }
-				console.log("odjoijo");
+                	if(formulario.nome.value == ''){
+                    		alert("O campo NOME deve ser preenchido.");
+                   		return false;
+                	}
+                	if(formulario.cnpj.value == ''){
+                    		alert("O campo CNPJ deve ser preenchido.");
+                    		return false;
+                	}
+			
 				
-				if(!(formulario.cnpj.value.length == tamanhoCNPJ)){
-					alert("Preencha completamente o cnpj");
-					return false;
-				}
-				if(formulario.id.value == ''){
-					alert("Preecha o campo id");
-					return false;
-				}
-				
-            return true;
+			if(!(formulario.cnpj.value.length == tamanhoCNPJ)){
+				alert("Preencha completamente o cnpj");
+				return false;
 			}
-		</script>
+			if(formulario.id.value == ''){
+				alert("Preecha o campo id");
+				return false;
+			}
+				
+			return true;
+		}
+    </script>
     </head>
     <body>
         <div id='page'>
