@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+
+<html lang="pt-br">
+	<head>
+        <title> JS </title>
+		<meta charset="utf-8">
+		<script src="http://yui.yahooapis.com/3.17.2/build/yui/yui-min.js"> </script>
+		
+		<style type="text/css">
+			body {
+				background-color: rgba(135, 158, 240, 1);
+			}
+		
+			#anime {
+				position: relative;
+				height: 400px;
+				width: 500px;
+				background-color: white;
+				margin: 0 auto;
+			}
+			
+
+			
+			#bloco {
+				width: 50px;
+				height: 15px;
+				position: absolute;
+				background-color: black;
+				color: white;
+				padding: 3px;
+				bottom: 0;
+				text-align: center;
+			}
+			
+			.all .information {
+				position: absolute;
+				top: 0;
+				width: 120px;
+				font-size: 16px;
+			}
+			
+			.information, body{
+				font-family: arial;
+			}
+			
+			
+		</style>
+    </head>
+
+	<body>
+
+		<div class="all">
+			<div id="anime">
+				<div id="bloco">YUI</div>
+			</div>
+			<dl class="information">
+				<dt>to move press:</dt>
+				<dd> arrow-left  </dd>
+				<dd> arrow-right </dd>
+				<dd> arrow-up    </dd>
+				<dd> arrow-left  </dd>
+			</dl>
+		</div>
+		<script language="javascript">
+		// font : http://yuilibrary.com/yui/docs/event/key.html#filter-tokens
+		//        http://yuilibrary.com/yui/docs/event/simulate.html#simulating-key-events
+		
+		YUI().use('transition', function (Y){ 
+			var keyLeft  = 37,
+			    keyUp    = 38,
+				keyRight = 39,
+				keyDown  = 40;
+				
+		    var my_anime = function(e) {
+				var bloco = Y.one('#bloco');
+				
+				if(e.keyCode == keyRight){
+					bloco.transition({
+						duration: 3,
+						marginLeft: '444px'
+					});
+				}
+				if(e.keyCode == keyLeft){
+				
+					bloco.transition({
+						duration: 3,
+						marginLeft: '0px'
+					});
+				}
+				if(e.keyCode == keyUp){
+					bloco.transition({
+						duration: 3,
+						marginBottom: '379px'  // 400 -(15 + 9) + 3
+						
+					});
+				}
+				if(e.keyCode == keyDown){
+					bloco.transition({
+						duration: 3,
+						marginBottom: '0px'
+					});
+				}
+				
+			}
+		Y.one('body').on('keydown', my_anime , '37, 38, 38, 40');
+					// teclas que serao usadas
+											
+		});
+		
+
+		</script>		
+	</body>
+
+</html>
